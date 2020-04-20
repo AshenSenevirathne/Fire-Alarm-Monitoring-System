@@ -25,7 +25,7 @@ namespace FireAlarm.Web.Data.Persistence
 
             _context.SensorDetails.Remove(sensorDetails);
             await _context.SaveChangesAsync();
-            return new ApiResult { STATUS = true, DATA = "Sucessfully deleted - " + sensorId };
+            return new ApiResult { STATUS = true, DATA = "Sucessfully deleted - sensor id : " + sensorId };
         }
 
         public async Task<ApiResult> EditSensor(SensorDetails sensorDetails)
@@ -38,9 +38,10 @@ namespace FireAlarm.Web.Data.Persistence
             dbSensorObj.floorNo = sensorDetails.floorNo;
             dbSensorObj.roomNo = sensorDetails.roomNo;
             dbSensorObj.sensorStatus = sensorDetails.sensorStatus;
+            dbSensorObj.sensorRemark = sensorDetails.sensorRemark;
 
             await _context.SaveChangesAsync();
-            return new ApiResult { STATUS = true, DATA = "Sucessfully edited - " + sensorDetails.sensorId };
+            return new ApiResult { STATUS = true, DATA = "Sucessfully edited - sensor id : " + sensorDetails.sensorId };
         }
 
         public async Task<ApiResult> GetSensorDetails()
@@ -63,7 +64,7 @@ namespace FireAlarm.Web.Data.Persistence
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - " + sensorDetails.sensorId };
+                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - sensor id : " + sensorDetails.sensorId };
                 }
                 catch(DbUpdateException dbUpdateEx)
                 {
@@ -85,7 +86,7 @@ namespace FireAlarm.Web.Data.Persistence
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - " + sensorState.sensorId };
+                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - sensor id : " + sensorState.sensorId };
                 }
                 catch(Exception ex)
                 {
