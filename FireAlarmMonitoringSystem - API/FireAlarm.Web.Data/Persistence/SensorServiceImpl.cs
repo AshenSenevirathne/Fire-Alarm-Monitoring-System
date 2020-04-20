@@ -17,22 +17,22 @@ namespace FireAlarm.Web.Data.Persistence
             _context = context;
         }
 
-        public async Task<bool> DeleteSensor(int sensorId)
+        public async Task<ApiResult> DeleteSensor(int sensorId)
         {
             SensorDetails sensorDetails = await _context.SensorDetails.FindAsync(sensorId);
             if (sensorDetails == null)
-                return false;
+                return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
 
             _context.SensorDetails.Remove(sensorDetails);
             await _context.SaveChangesAsync();
-            return true;
+            return new ApiResult { STATUS = true, DATA = "Sucessfully deleted - " + sensorId };
         }
 
-        public async Task<bool> EditSensor(SensorDetails sensorDetails)
+        public async Task<ApiResult> EditSensor(SensorDetails sensorDetails)
         {
             SensorDetails dbSensorObj = await _context.SensorDetails.FindAsync(sensorDetails.sensorId);
             if (dbSensorObj == null || sensorDetails == null)
-                return false;
+                return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
 
             dbSensorObj.sensorName = sensorDetails.sensorName;
             dbSensorObj.floorNo = sensorDetails.floorNo;
@@ -40,20 +40,22 @@ namespace FireAlarm.Web.Data.Persistence
             dbSensorObj.sensorStatus = sensorDetails.sensorStatus;
 
             await _context.SaveChangesAsync();
-            return true;
+            return new ApiResult { STATUS = true, DATA = "Sucessfully edited - " + sensorDetails.sensorId };
         }
 
-        public async Task<List<SensorDetails>> GetSensorDetails()
+        public async Task<ApiResult> GetSensorDetails()
         {
-            return await _context.SensorDetails.ToListAsync();
+            var resultObj = await _context.SensorDetails.ToListAsync();
+            return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
-        public async Task<List<SensorState>> GetSensorState()
+        public async Task<ApiResult> GetSensorState()
         {
-            return await _context.SensorState.ToListAsync();
+            var resultObj =  await _context.SensorState.ToListAsync();
+            return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
-        public async Task<bool> RegisterSensor(SensorDetails sensorDetails)
+        public async Task<ApiResult> RegisterSensor(SensorDetails sensorDetails)
         {
             if(sensorDetails != null)
             {
@@ -61,21 +63,21 @@ namespace FireAlarm.Web.Data.Persistence
                 try
                 {
                     await _context.SaveChangesAsync();
+                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - " + sensorDetails.sensorId };
                 }
                 catch(DbUpdateException dbUpdateEx)
                 {
-                    throw new Exception("Error saving data", dbUpdateEx);
+                    return new ApiResult { STATUS = false, DATA = "Error saving data - " + dbUpdateEx };
                 }
                 catch(Exception ex)
                 {
-                    throw new Exception("Error happen", ex);
+                    return new ApiResult { STATUS = false, DATA = "Error saving data - " + ex };
                 }
-                return true;
             }
-            return false;
+            return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
         }
 
-        public async Task<bool> SetSensorState(SensorState sensorState)
+        public async Task<ApiResult> SetSensorState(SensorState sensorState)
         {
             if(sensorState != null)
             {
@@ -83,14 +85,14 @@ namespace FireAlarm.Web.Data.Persistence
                 try
                 {
                     await _context.SaveChangesAsync();
+                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - " + sensorState.sensorId };
                 }
                 catch(Exception ex)
                 {
-                    throw new Exception("Error saving data", ex);
+                    return new ApiResult { STATUS = false, DATA = "Error saving data - " + ex };
                 }
-                return true;
             }
-            return false;
+            return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
         }
     }
 }

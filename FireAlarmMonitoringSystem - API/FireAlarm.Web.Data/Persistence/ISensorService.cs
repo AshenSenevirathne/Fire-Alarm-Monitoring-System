@@ -8,11 +8,11 @@ namespace FireAlarm.Web.Data.Persistence
 {
     public interface ISensorService
     {
-        Task<List<SensorDetails>> GetSensorDetails();
-        Task<List<SensorState>> GetSensorState();
-        Task<bool> RegisterSensor(SensorDetails sensorDetails);
-        Task<bool> EditSensor(SensorDetails sensorDetails);
-        Task<bool> DeleteSensor(int sensorId);
-        Task<bool> SetSensorState(SensorState sensorState);
+        Task<ApiResult> GetSensorDetails();
+        Task<ApiResult> GetSensorState();
+        Task<ApiResult> RegisterSensor(SensorDetails sensorDetails);
+        Task<ApiResult> EditSensor(SensorDetails sensorDetails);
+        Task<ApiResult> DeleteSensor(int sensorId);
+        Task<ApiResult> SetSensorState(SensorState sensorState);
     }
 }
