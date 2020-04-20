@@ -21,5 +21,11 @@ namespace FireAlarm.Web.API.Controllers
             _context = context;
             _userService = userService;
         }
+
+        [HttpPost("SignIn")]
+        public async Task<ApiResult> SignIn(User user)
+        {
+            return await _userService.SignIn(user);
+        }
     }
 }
