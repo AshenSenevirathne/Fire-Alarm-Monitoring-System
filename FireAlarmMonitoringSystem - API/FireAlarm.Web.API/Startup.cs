@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using FireAlarm.Web.Data.Entities;
 using FireAlarm.Web.Data.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace FireAlarm.Web.API
 {
@@ -28,6 +30,19 @@ namespace FireAlarm.Web.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Token:Secret")));
+            services.AddAuthentication("OAuth")
+                .AddJwtBearer("OAuth", config =>
+                {
+                    config.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration.GetValue<string>("Token:Issuer"),
+                        ValidAudience = Configuration.GetValue<string>("Token:Audiance"),
+                        IssuerSigningKey = symmetricKey
+                    };
+                });
+
             services.AddDbContext<FireAlarmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserDbContext")));
             services.AddScoped<ISensorService,SensorServiceImpl>();
             services.AddScoped<IUserService,UserServiceImpl>();
@@ -44,6 +59,7 @@ namespace FireAlarm.Web.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
