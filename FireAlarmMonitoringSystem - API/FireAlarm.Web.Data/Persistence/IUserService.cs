@@ -8,6 +8,6 @@ namespace FireAlarm.Web.Data.Persistence
 {
     public interface IUserService
     {
-        Task<ApiResult> SignIn(User user);
+        Task<User> SignIn(User user);
     }
 }
