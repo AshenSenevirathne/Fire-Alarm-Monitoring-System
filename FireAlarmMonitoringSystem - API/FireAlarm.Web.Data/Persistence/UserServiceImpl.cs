@@ -17,23 +17,17 @@ namespace FireAlarm.Web.Data.Persistence
         {
             _context = context;
         }
-        public async Task<ApiResult> SignIn(User user)
+        public async Task<User> SignIn(User user)
         {
             User loginUser = await _context.Users.FirstOrDefaultAsync(
                 dbUser => dbUser.userName.Equals(user.userName) && dbUser.userPassword.Equals(user.userPassword)
             );
 
-            if(loginUser == null)
-                return new ApiResult { STATUS = false, DATA = "There is no user related to the user id" };
+            if (loginUser == null)
+                return null;
 
-            var resultObj = new
-            {
-                userId = loginUser.userId,
-                userName = loginUser.userName,
-                token = "123456789ABCDEFGHIJKLMNOPQRS"
-                
-            };
-            return new ApiResult { STATUS = true, DATA = resultObj };
+            loginUser.userRole = await _context.UserRoles.FirstOrDefaultAsync(userRole => userRole.roleId == loginUser.userRoleId);
+            return loginUser;
         }
     }
 }
