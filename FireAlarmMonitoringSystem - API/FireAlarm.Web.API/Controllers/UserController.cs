@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FireAlarm.Web.Data.Entities;
 using FireAlarm.Web.Data.Persistence;
+using FireAlarm.Web.API.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace FireAlarm.Web.API.Controllers
 {
@@ -15,17 +17,21 @@ namespace FireAlarm.Web.API.Controllers
     {
         private readonly FireAlarmDbContext _context;
         private readonly IUserService _userService;
+        private IConfiguration _configuration;
 
-        public UserController(FireAlarmDbContext context, IUserService userService)
+        public UserController(FireAlarmDbContext context, IUserService userService, IConfiguration configuration)
         {
             _context = context;
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpPost("SignIn")]
         public async Task<ApiResult> SignIn(User user)
         {
-            return await _userService.SignIn(user);
+            User loginUser = await _userService.SignIn(user);
+            Authentication authentication = new Authentication(_configuration);
+            return authentication.GetToken(loginUser);
         }
     }
 }
