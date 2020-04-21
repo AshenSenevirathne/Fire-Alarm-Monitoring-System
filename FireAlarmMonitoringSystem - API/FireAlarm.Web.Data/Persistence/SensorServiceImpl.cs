@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FireAlarm.Web.Data.Persistence
 {
@@ -46,13 +47,30 @@ namespace FireAlarm.Web.Data.Persistence
 
         public async Task<ApiResult> GetSensorDetails()
         {
-            var resultObj = await _context.SensorDetails.ToListAsync();
+            var resultObj = await _context.SensorDetails.Where(sensorDetails => sensorDetails.sensorStatus.Equals("A"))
+                .Select(sensorObj => new
+                {
+                    sensorId = sensorObj.sensorId,
+                    sensorName = sensorObj.sensorName,
+                    floorNo = sensorObj.floorNo,
+                    roomNo = sensorObj.roomNo,
+                    sensorStatus = sensorObj.sensorStatus
+                }
+            ).ToListAsync();
             return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
         public async Task<ApiResult> GetSensorState()
         {
-            var resultObj =  await _context.SensorState.ToListAsync();
+            var resultObj =  await _context.SensorState.Include(sensorState => sensorState.sensorDetails)
+                .Where(sensorState => sensorState.sensorDetails.sensorStatus.Equals("A"))
+                .Select(sensorState => new 
+                {
+                    sensorId = sensorState.sensorId,
+                    smokeLevel = sensorState.smokeLevel,
+                    co2Level = sensorState.coLevel
+                })
+                .ToListAsync();
             return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
