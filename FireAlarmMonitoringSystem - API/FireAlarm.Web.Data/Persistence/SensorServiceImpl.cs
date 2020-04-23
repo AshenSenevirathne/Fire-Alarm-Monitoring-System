@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FireAlarm.Web.Data.Persistence
 {
@@ -54,23 +55,11 @@ namespace FireAlarm.Web.Data.Persistence
                     sensorName = sensorObj.sensorName,
                     floorNo = sensorObj.floorNo,
                     roomNo = sensorObj.roomNo,
-                    sensorStatus = sensorObj.sensorStatus
+                    sensorStatus = sensorObj.sensorStatus,
+                    smokeLevel = sensorObj.smokeLevel,
+                    co2Level = sensorObj.coLevel
                 }
             ).ToListAsync();
-            return new ApiResult { STATUS = true, DATA = resultObj };
-        }
-
-        public async Task<ApiResult> GetSensorState()
-        {
-            var resultObj =  await _context.SensorState.Include(sensorState => sensorState.sensorDetails)
-                .Where(sensorState => sensorState.sensorDetails.sensorStatus.Equals("A"))
-                .Select(sensorState => new 
-                {
-                    sensorId = sensorState.sensorId,
-                    smokeLevel = sensorState.smokeLevel,
-                    co2Level = sensorState.coLevel
-                })
-                .ToListAsync();
             return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
@@ -96,22 +85,21 @@ namespace FireAlarm.Web.Data.Persistence
             return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
         }
 
-        public async Task<ApiResult> SetSensorState(SensorState sensorState)
+        public async Task<ApiResult> SetSensorState(SensorDetails sensorState)
         {
             if(sensorState != null)
             {
-                await _context.AddAsync(sensorState);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return new ApiResult { STATUS = true, DATA = "Sucessfully saved - sensor id : " + sensorState.sensorId };
-                }
-                catch(Exception ex)
-                {
-                    return new ApiResult { STATUS = false, DATA = "Error saving data - " + ex };
-                }
+                SensorDetails dbSensorObj = await _context.SensorDetails.FindAsync(sensorState.sensorId);
+                if (dbSensorObj == null || sensorState == null)
+                    return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
+
+                dbSensorObj.smokeLevel = sensorState.smokeLevel;
+                dbSensorObj.coLevel = sensorState.coLevel;
+
+                await _context.SaveChangesAsync();
+                return new ApiResult { STATUS = true, DATA = "Sucessfully updated - sensor id : " + sensorState.sensorId };
             }
-            return new ApiResult { STATUS = false, DATA = "There is no sensor related to the sensor id" };
+            return new ApiResult { STATUS = false, DATA = "Please enter sensor details to pass object" };
         }
     }
 }
