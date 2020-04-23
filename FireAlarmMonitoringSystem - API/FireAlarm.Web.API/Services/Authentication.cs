@@ -28,7 +28,7 @@ namespace FireAlarm.Web.API.Services
         public ApiResult GetToken(User loginUser)
         {
             if(loginUser == null)
-                return new ApiResult { STATUS = false, DATA = "There is no user related to the user id" };
+                return new ApiResult { STATUS = false, DATA = "There is no user related to the user credintial" };
 
             var claims = new[]
             {
