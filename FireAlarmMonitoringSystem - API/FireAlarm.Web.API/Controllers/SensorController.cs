@@ -30,13 +30,6 @@ namespace FireAlarm.Web.API.Controllers
             return await _sensorService.GetSensorDetails();
         }
 
-        [Authorize]
-        [HttpGet("GetSensorState")]
-        public async Task<ApiResult> GetSensorState()
-        {
-            return await _sensorService.GetSensorState();
-        }
-
         [Authorize(Roles = "ADMIN")]
         [HttpPost("RegisterSensor")]
         public async Task<ApiResult> RegisterSensor(SensorDetails sensorDetails)
@@ -59,7 +52,7 @@ namespace FireAlarm.Web.API.Controllers
         }
 
         [HttpPost("SetSensorState")]
-        public async Task<ApiResult> SetSensorState(SensorState sensorState)
+        public async Task<ApiResult> SetSensorState(SensorDetails sensorState)
         {
             return await _sensorService.SetSensorState(sensorState);
         }
