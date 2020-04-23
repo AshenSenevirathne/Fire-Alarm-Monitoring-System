@@ -9,10 +9,9 @@ namespace FireAlarm.Web.Data.Persistence
     public interface ISensorService
     {
         Task<ApiResult> GetSensorDetails();
-        Task<ApiResult> GetSensorState();
         Task<ApiResult> RegisterSensor(SensorDetails sensorDetails);
         Task<ApiResult> EditSensor(SensorDetails sensorDetails);
         Task<ApiResult> DeleteSensor(int sensorId);
-        Task<ApiResult> SetSensorState(SensorState sensorState);
+        Task<ApiResult> SetSensorState(SensorDetails sensorState);
     }
 }
