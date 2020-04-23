@@ -21,7 +21,9 @@ namespace FireAlarm.Web.Data.Entities
         public string sensorStatus { get; set; }
         [JsonProperty("sensorRemark")]
         public string sensorRemark { get; set; }
-
-        public ICollection<SensorState> sensorStates { get; set; }
+        [JsonProperty("smokeLevel")]
+        public int smokeLevel { get; set; }
+        [JsonProperty("coLevel")]
+        public int coLevel { get; set; }
     }
 }
