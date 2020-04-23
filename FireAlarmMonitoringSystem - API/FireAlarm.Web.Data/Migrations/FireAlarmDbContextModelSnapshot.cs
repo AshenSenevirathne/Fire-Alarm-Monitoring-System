@@ -25,6 +25,9 @@ namespace FireAlarm.Web.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("coLevel")
+                        .HasColumnType("int");
+
                     b.Property<string>("floorNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -40,32 +43,12 @@ namespace FireAlarm.Web.Data.Migrations
                     b.Property<string>("sensorStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("sensorId");
-
-                    b.ToTable("SensorDetails");
-                });
-
-            modelBuilder.Entity("FireAlarm.Web.Data.Entities.SensorState", b =>
-                {
-                    b.Property<int>("statusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("coLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sensorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("smokeLevel")
                         .HasColumnType("int");
 
-                    b.HasKey("statusId");
+                    b.HasKey("sensorId");
 
-                    b.HasIndex("sensorId");
-
-                    b.ToTable("SensorState");
+                    b.ToTable("SensorDetails");
                 });
 
             modelBuilder.Entity("FireAlarm.Web.Data.Entities.User", b =>
@@ -110,15 +93,6 @@ namespace FireAlarm.Web.Data.Migrations
                     b.HasKey("roleId");
 
                     b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("FireAlarm.Web.Data.Entities.SensorState", b =>
-                {
-                    b.HasOne("FireAlarm.Web.Data.Entities.SensorDetails", "sensorDetails")
-                        .WithMany("sensorStates")
-                        .HasForeignKey("sensorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FireAlarm.Web.Data.Entities.User", b =>
