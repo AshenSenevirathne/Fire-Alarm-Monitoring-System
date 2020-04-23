@@ -20,7 +20,7 @@ namespace FireAlarm.Web.Data.Persistence
         public async Task<User> SignIn(User user)
         {
             User loginUser = await _context.Users.FirstOrDefaultAsync(
-                dbUser => dbUser.userName.Equals(user.userName) && dbUser.userPassword.Equals(user.userPassword)
+                dbUser => dbUser.userEmail.Equals(user.userEmail) && dbUser.userPassword.Equals(user.userPassword)
             );
 
             if (loginUser == null)
