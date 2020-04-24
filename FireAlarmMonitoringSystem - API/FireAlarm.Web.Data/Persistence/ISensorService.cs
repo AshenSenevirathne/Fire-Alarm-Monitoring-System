@@ -13,5 +13,6 @@ namespace FireAlarm.Web.Data.Persistence
         Task<ApiResult> EditSensor(SensorDetails sensorDetails);
         Task<ApiResult> DeleteSensor(int sensorId);
         Task<ApiResult> SetSensorState(SensorDetails sensorState);
+        Task<ApiResult> GetSensors();
     }
 }
