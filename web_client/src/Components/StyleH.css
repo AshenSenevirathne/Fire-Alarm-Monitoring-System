@@ -1,0 +1,37 @@
+.Header, h1{
+    text-align: center;
+    color: darkslategray;
+    font-family: "Allerta Stencil", Sans-serif;
+    font-size: 50px;
+    text-shadow: burlywood;
+}
+#Body{
+    background: #f2f2f2;
+}
+#cardHeader{
+    text-align: center;
+}
+
+.Header, h5{
+    text-align: center;
+    color: darkgrey;
+    margin-top: 2%;
+}
+
+#Sensor{
+    border-style: groove;
+    border-radius: 10px;
+    display: flex;
+}
+
+#cardBody{
+    text-align: center;
+}
+
+#footer{
+    text-align: center;
+}
+
+#Home{
+    display: flex;
+}
