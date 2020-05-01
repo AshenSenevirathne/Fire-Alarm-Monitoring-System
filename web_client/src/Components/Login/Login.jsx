@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 /*import './Style.scss';*/
 import Home from "../Home";
-import './LoginStyle.css';
+import '../Style/LoginStyle.css';
 
 export default class Login extends Component{
 

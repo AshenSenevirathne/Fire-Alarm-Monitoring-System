@@ -1,16 +1,15 @@
 import React,{Component, useState, useEffect} from "react";
-import './Login/Style.scss';
-import './StyleH.css';
+import Sensor from "./Sensor/Sensor";
+import './Style/LoginStyle.css';
+import './Style/StyleH.css';
 import axios from 'axios'
 
 export default class Home extends Component{
-
     constructor(props) {
         super(props);
         this.state = {
-            content: []
+            content: []     //use for get data from API
         };
-
         this.fetchData = this.fetchData.bind(this);  //bind function
     }
 
@@ -28,18 +27,15 @@ export default class Home extends Component{
         };
 
         if (typeof fetch == 'undefined') return
-        const response = await fetch('http://localhost:44332/api/sensor/GetSensorDetails', config)  //get request with token
+        const response = await fetch('http://localhost:44332/api/sensor/GetSensorDetails', config)  //send token in the url header and get the response from API
         const content = await response.json()   //response convert in to json object
 
         this.setState({
             content: content.data
         });
         //console.log(this.state.content);
-
     }
-
     render() {
-
         const { content } = this.state;
 
         return (
@@ -49,28 +45,17 @@ export default class Home extends Component{
                     <h5>It is not death, it is dying that alarms me.</h5>
                 </div>
                 <div className="row m-5" id="Sensor">
-                    {content.map((item, index) => (
-                        <div className="col-md-4" key={index}>
-                            <div className="m-5" >
-                                <div className=
-                                         {(item.co2Level > 5 || item.smokeLevel > 5) ? "card text-white bg-danger mb-3" : "card text-white bg-success mb-3"}>
-                                    <div className={(item.co2Level > 5 || item.smokeLevel > 5) ?"card-header border-danger": "card-header border-success"}  id="cardHeader"><h4 className="card-title">{item.sensorName}</h4></div>
-                                    <div className="card-body " id="cardBody">
-                                        <p className="card-text">Floor No : {item.floorNo}</p>
-                                        <p className="card-text">Room No : {item.roomNo}</p>
-                                        <p className="card-text">Smoke Level : {item.smokeLevel}</p>
-                                        <p className="card-text">CO2 level : {item.co2Level}</p>
-                                    </div>
-                                    <div className={(item.co2Level > 5 || item.smokeLevel > 5) ? "card-footer border-danger": "card-footer border-success"} id="footer">
-                                        <span>{(item.sensorStatus == "A") ? "Status : Active":"Status : Inactive"}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-
+                    {content.map((item, index) => {
+                        return <Sensor key = {index}
+                                       sensorName = {item.sensorName}
+                                       co2Level = {item.co2Level}
+                                       smokeLevel = {item.smokeLevel}
+                                       floorNo = {item.floorNo}
+                                       roomNo = {item.roomNo}
+                                       sensorStatus = {item.sensorStatus}
+                        />;
+                    })}
                 </div>
-
             </div>
         );
     }

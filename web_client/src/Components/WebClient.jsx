@@ -37,14 +37,13 @@ export default class extends Component{
     onSubmitHandler = (e) =>{
         e.preventDefault();
 
-        // Send a POST request
-        axios
-            .post("http://localhost:44332/api/user/SignIn", {
+        // Send a POST request to API
+        axios.post("http://localhost:44332/api/user/SignIn", {
                 userEmail: this.state.email.toString(),
                 userPassword: this.state.password.toString()
             })
             .then(result => {
-                console.log(result);
+                //console.log(result);
                 this.setState({
                     data: result.data,
                     loading: false,
@@ -74,9 +73,7 @@ export default class extends Component{
             .catch(err => console.error(err));
     };
 
-
     render() {
-
         return (
             <div>
                 {this.state.showHome ?
@@ -91,7 +88,6 @@ export default class extends Component{
                         onSubmitHandler={this.onSubmitHandler}
                     />
                 }
-
             </div>
         );
     }
