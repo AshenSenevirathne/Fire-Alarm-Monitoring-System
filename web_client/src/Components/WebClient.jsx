@@ -50,7 +50,7 @@ export default class extends Component{
                     error: false,
                     token: result.data.data.token
                 });
-                if(this.state.loading == true){
+                if(this.state.loading === true){
                     return(
                         <div>
                             Loading...

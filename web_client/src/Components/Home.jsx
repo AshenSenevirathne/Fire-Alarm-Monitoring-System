@@ -1,8 +1,7 @@
-import React,{Component, useState, useEffect} from "react";
+import React,{Component} from "react";
 import Sensor from "./Sensor/Sensor";
 import './Style/LoginStyle.css';
 import './Style/StyleH.css';
-import axios from 'axios'
 
 export default class Home extends Component{
     constructor(props) {
@@ -37,7 +36,7 @@ export default class Home extends Component{
     }
     render() {
         const { content } = this.state;
-
+        console.log(content);
         return (
             <div id="Body">
                 <div className="header jumbotron">

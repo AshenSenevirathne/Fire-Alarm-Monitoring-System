@@ -20,7 +20,7 @@ export default class Sensor extends Component{
                             <p className="card-text">CO2 level : {co2Level}</p>
                         </div>
                         <div className={`card-footer border-${color}`} id="footer">
-                            <span>{(sensorStatus == "A") ? "Status : Active":"Status : Inactive"}</span>
+                            <span>{(sensorStatus === "A") ? "Status : Active":"Status : Inactive"}</span>
                         </div>
                     </div>
                 </div>
