@@ -7,8 +7,7 @@ export default class Login extends Component{
         const {email, password, onChangeHandlerEmail, onChangeHandlerPwd, onSubmitHandler} = this.props;
 
         return(
-            <div className="wrapper fadeInDown">
-                <br/><br/><br/><br/>
+            <div className="wrapper fadeInDown" style={{marginTop: "8%"}}>
                 <div id="formContent">
 
                     <h2> Sign In </h2><br/><br/>
@@ -22,9 +21,9 @@ export default class Login extends Component{
                         <input name="email" onChange={onChangeHandlerEmail} type="email" className="login-username" required={true}
                                placeholder="Email" value={email}/>
                         <input name="password" onChange={onChangeHandlerPwd} type="password" className="login-password" required={true}
-                               placeholder="Password" value={password}/><br/><br/><br/>
+                               placeholder="Password" value={password}/>
 
-                        <input type="submit" name="Login" value="Login" className="login-submit"/>
+                        <input type="submit" name="Login" value="Login" className="login-submit" style={{marginTop: "10%"}}/>
                     </form>
 
                 </div>
