@@ -23,7 +23,6 @@ namespace FireAlarm.Web.API.Controllers
             _sensorService = sensorService;
         }
 
-        [Authorize]
         [HttpGet("GetSensorDetails")]
         public async Task<ApiResult> GetSensorDetails()
         {
