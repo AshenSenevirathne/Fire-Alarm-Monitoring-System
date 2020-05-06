@@ -33,5 +33,11 @@ namespace FireAlarm.Web.API.Controllers
             Authentication authentication = new Authentication(_configuration);
             return authentication.GetToken(loginUser);
         }
+
+        [HttpGet("GetUserEmailMobile")]
+        public async Task<ApiResult> GetUserEmailMobile()
+        {
+            return await _userService.GetUserEmailAndMobileList();
+        }
     }
 }
