@@ -63,20 +63,6 @@ namespace FireAlarm.Web.Data.Persistence
             return new ApiResult { STATUS = true, DATA = resultObj };
         }
 
-        public async Task<ApiResult> GetSensors()
-        {
-            var resultObj = await _context.SensorDetails.Where(sensorDetails => sensorDetails.sensorStatus.Equals("A"))
-                .Select(sensorObj => new
-                {
-                    sensorId = sensorObj.sensorId,
-                    sensorName = sensorObj.sensorName,
-                    floorNo = sensorObj.floorNo,
-                    roomNo = sensorObj.roomNo
-                }
-            ).ToListAsync();
-            return new ApiResult { STATUS = true, DATA = resultObj };
-        }
-
         public async Task<ApiResult> RegisterSensor(SensorDetails sensorDetails)
         {
             if(sensorDetails != null)
