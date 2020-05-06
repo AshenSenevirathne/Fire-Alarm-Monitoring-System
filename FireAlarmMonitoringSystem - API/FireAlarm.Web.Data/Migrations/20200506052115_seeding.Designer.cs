@@ -3,14 +3,16 @@ using FireAlarm.Web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FireAlarm.Web.Data.Migrations
 {
     [DbContext(typeof(FireAlarmDbContext))]
-    partial class FireAlarmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200506052115_seeding")]
+    partial class seeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace FireAlarm.Web.Data.Migrations
                         {
                             userId = 1,
                             userEmail = "kusalpriyanka782@gmail.com",
-                            userMobileNo = "+940755628231",
+                            userMobileNo = "0777123456",
                             userName = "Kusal Priyanka",
                             userPassword = "abc123",
                             userRoleId = 2
@@ -145,7 +147,7 @@ namespace FireAlarm.Web.Data.Migrations
                         {
                             userId = 2,
                             userEmail = "dimuthuc2@gmail.com",
-                            userMobileNo = "+940766944088",
+                            userMobileNo = "0757123456",
                             userName = "Dimuthu Abesighe",
                             userPassword = "abc123",
                             userRoleId = 1

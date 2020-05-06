@@ -3,14 +3,16 @@ using FireAlarm.Web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FireAlarm.Web.Data.Migrations
 {
     [DbContext(typeof(FireAlarmDbContext))]
-    partial class FireAlarmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200506052335_seeding-update")]
+    partial class seedingupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
