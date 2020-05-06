@@ -9,5 +9,7 @@ namespace FireAlarm.Web.Data.Persistence
     public interface IUserService
     {
         Task<User> SignIn(User user);
+
+        Task<ApiResult> GetUserEmailAndMobileList();
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FireAlarm.Web.Data.Persistence
 {
@@ -17,6 +18,21 @@ namespace FireAlarm.Web.Data.Persistence
         {
             _context = context;
         }
+
+        public async Task<ApiResult> GetUserEmailAndMobileList()
+        {
+            var emailList = await _context.Users.Select(user => user.userEmail).ToListAsync();
+            var mobileList = await _context.Users.Select(user => user.userMobileNo).ToListAsync();
+
+            var resultObj = new
+            {
+                email = emailList,
+                mobile = mobileList
+            };
+
+            return new ApiResult { STATUS = true, DATA = resultObj };
+        }
+
         public async Task<User> SignIn(User user)
         {
             User loginUser = await _context.Users.FirstOrDefaultAsync(
