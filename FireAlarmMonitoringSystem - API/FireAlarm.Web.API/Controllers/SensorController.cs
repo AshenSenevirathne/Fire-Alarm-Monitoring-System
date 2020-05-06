@@ -50,12 +50,6 @@ namespace FireAlarm.Web.API.Controllers
             return await _sensorService.DeleteSensor(sensorId);
         }
 
-        [HttpGet("GetSensors")]
-        public async Task<ApiResult> GetSensors()
-        {
-            return await _sensorService.GetSensors();
-        }
-
         [HttpPost("SetSensorState")]
         public async Task<ApiResult> SetSensorState(SensorDetails sensorState)
         {
