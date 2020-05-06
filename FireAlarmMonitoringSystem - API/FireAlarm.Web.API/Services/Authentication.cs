@@ -53,7 +53,10 @@ namespace FireAlarm.Web.API.Services
             {
                 userId = loginUser.userId,
                 userName = loginUser.userName,
-                token = new JwtSecurityTokenHandler().WriteToken(token)
+                token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token),
+                userMobile = loginUser.userMobileNo,
+                userEmail = loginUser.userEmail,
+                userRole = loginUser.userRole.roleDescription
             };
 
             return new ApiResult { STATUS = true, DATA = resultObj };
