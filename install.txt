@@ -1,0 +1,42 @@
+---------- Install -----------
+
+01) Run API
+
+    -> Go to the "FireAlarmMonitoringSystem - API" folder and open the "FireAlarmMonitoringSystem.sln" file in visual studio 2019.
+    -> Go to the "FireAlarm.Web.API" project and open the "appsettings.json" file.
+    -> Change the connection string by adding the local Sql server name to data sourse.
+    -> Then go to the "Tools" tab in visual studio and select "Nuget Package Manager" and then select "Package Manager Console".
+    -> Run "update-database" command to entity framework migration process. It will create a database and add dummy values.
+    -> Finally Click "IIS Express" button to run API project.
+
+02) Run Sensor
+
+    -> Open "Sensor" folder using Eclipse.
+    -> Run the Main.java file inside the com.sensor package.
+
+03) Run Web Client
+
+    -> Open "web_client" folder using visual studio code.
+    -> Then Open the terminal in visual studio code. Go to "Terminal" Tab and click "New Terminal".
+    -> Then Install the dependencies in the local node_modules folder by run "npm install" command in the terminal.
+    -> After installing node_modules, run the react project by execute "npm start" command in the terminal.
+
+04) Run RMI Server and Client
+
+    -> Go to the "RMI" folder and open the "bin" folder
+    -> Open the CMD in bin folder. Then type "start rmiregistry".
+    -> Then open the "RMI" folder using Eclipse.
+    -> First go to com.rmiserver package and run the "Service.java". It will run the RMI server.
+    -> Finally run the "Main.java" file inside com.rmiclient.
+
+    
+	Login Credintials
+	
+	*)Admin User
+		User Email : 'kusalpriyanka782@gmail.com'
+		user password : 'abc123'
+
+
+	*)Normal User
+		User Email : 'dimuthuc2@gmail.com'
+		user password : 'abc123'
