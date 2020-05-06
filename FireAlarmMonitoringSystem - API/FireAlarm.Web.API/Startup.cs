@@ -29,22 +29,30 @@ namespace FireAlarm.Web.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable CORS
             services.AddCors();
             services.AddControllers();
 
+            // Validate the token of each api request
+            // Create the symmetric key using secret key 
             var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Token:Secret")));
             services.AddAuthentication("OAuth")
                 .AddJwtBearer("OAuth", config =>
                 {
                     config.TokenValidationParameters = new TokenValidationParameters()
                     {
+                        // Set valid issuer
                         ValidIssuer = Configuration.GetValue<string>("Token:Issuer"),
+                        // Set valid audience
                         ValidAudience = Configuration.GetValue<string>("Token:Audiance"),
+                        // Set symmetric key
                         IssuerSigningKey = symmetricKey
                     };
                 });
 
+            // Set Sql connection to the FireAlarmDbContext classs
             services.AddDbContext<FireAlarmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserDbContext")));
+            //  Set ISensorService and IUserService
             services.AddScoped<ISensorService,SensorServiceImpl>();
             services.AddScoped<IUserService,UserServiceImpl>();
         }
@@ -56,6 +64,7 @@ namespace FireAlarm.Web.API
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable CORS
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -65,6 +74,7 @@ namespace FireAlarm.Web.API
 
             app.UseRouting();
 
+            // Set Authentication
             app.UseAuthentication();
             app.UseAuthorization();
 

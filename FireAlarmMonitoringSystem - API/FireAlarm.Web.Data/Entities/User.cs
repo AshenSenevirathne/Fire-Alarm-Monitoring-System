@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
+/*
+ * @Author      :   Kusal Priyanka
+ * @Class Name  :   User
+ * @Description :   User class store the all properties of the Users
+*/
+
 namespace FireAlarm.Web.Data.Entities
 {
     public class User
